@@ -39,9 +39,9 @@ resultCardsContainer.addEventListener("click", specificRecipeClicked);
 
 function loadData() {
   Promise.all([users, recipe, ingredients]).then((data) => {
-    usersData = data[0].usersData;
-    recipeData = data[1].recipeData;
-    ingredientsData = data[2].ingredientsData;
+    usersData = data[0];
+    recipeData = data[1];
+    ingredientsData = data[2];
     user = new User(usersData[Math.floor(Math.random() * 41)]);
     recipeRepo = new RecipeRepository();
     recipeRepo.importRecipesFromFile(recipeData, ingredientsData);

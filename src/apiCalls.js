@@ -1,5 +1,5 @@
 const ingredients = fetch(
-  "https://what-s-cookin-starter-kit.herokuapp.com/api/v1/ingredients"
+  "http://localhost:3001/api/v1/ingredients"
 )
   .then((response) => {
     if (response.ok) {
@@ -12,7 +12,7 @@ const ingredients = fetch(
   .catch((err) => console.log(err));
 
 const recipe = fetch(
-  "https://what-s-cookin-starter-kit.herokuapp.com/api/v1/recipes"
+  "http://localhost:3001/api/v1/recipes"
 )
   .then((response) => {
     if (response.ok) {
@@ -25,7 +25,7 @@ const recipe = fetch(
   .catch((err) => console.log(err));
 
 const users = fetch(
-  "	https://what-s-cookin-starter-kit.herokuapp.com/api/v1/users"
+  "http://localhost:3001/api/v1/users"
 )
   .then((response) => {
     if (response.ok) {
