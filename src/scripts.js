@@ -31,12 +31,12 @@ const saveIcon = document.querySelector(".save-recipe-icon");
 window.addEventListener("load", loadData);
 toggleSeachOption.addEventListener("click", showKeywords);
 keywordList.addEventListener("click", keywordClicked);
-homeButton.addEventListener("click", displayAllRecipesView);
+// homeButton.addEventListener("click", displayAllRecipesView);
 searchButton.addEventListener("click", executeSearch);
 myRecipesButton.addEventListener("click", displayUserRecipes);
 closeIcon.addEventListener("click", closeSpecificRecipe);
 saveIcon.addEventListener("click", specificRecipeClicked);
-// resultCardsContainer.addEventListener("click", specificRecipeClicked);
+resultCardsContainer.addEventListener("click", specificRecipeClicked);
 
 function loadData() {
   Promise.all([users, recipe, ingredients]).then((data) => {
@@ -124,8 +124,9 @@ function specificRecipeClicked(event) {
 
 function displaySpecificRecipe(recipe) {
   updateSpecificRecipeCard(recipe);
-  show(specificRecipeSection);
-  show(modalCurtain);
+  MicroModal.show("specific-recipe-section")
+  // show(specificRecipeSection);
+  // show(modalCurtain);
 }
 
 function updateSpecificRecipeCard(recipe) {

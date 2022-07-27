@@ -46,60 +46,80 @@
 
           <section class="right-side"></section>
 
-          <section
-            id="specific-recipe-section"
-            class="mega-card card-border specific-recipe hidden"
-          >
-            <header class="mega-card-header">
-              <span class="close-icon">❌</span>
-              <span class="save-recipe-icon favorite-button" data-id=""
-                >❤️</span
-              >
-            </header>
-            <section class="mega-card-title">
-              <h2 class="title"></h2>
-            </section>
-
-            <section class="mega-body">
-              <img
-                class="specific-recipe-image"
-                src="https://static01.nyt.com/images/2022/06/12/dining/12Korokke/merlin_208197630_39a1b4ee-998e-4706-9f2f-8d5696f5e6ac-mobileMasterAt3x.jpg"
-              />
-              <section class="recipe-cost">
-                <h3>Total Cost</h3>
-                <div>
-                  <h5></h5>
-                </div>
-                <button class="cook-button" type="button">Cook Recipe!</button>
-              </section>
-
-              <section class="ingredients">
-                <h3>Ingredients Needed</h3>
-                <ol></ol>
-              </section>
-              <section class="instructions">
-                <h3>Instructions</h3>
-                <ol></ol>
-              </section>
-            </section>
-          </section>
         </section>
       </section>
-    </main>
-    
-    <div class="micromodal-slide modal" id="modal-1" aria-hidden="true">
-      <div class="modal__overlay" tabindex="-1" data-micromodal-close>
-        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title" >
-          <header class="modal__header">
-            <h2 id="modal-1-title">
+    </section>
+  </main>
+  
+  <div class="micromodal-slide modal mega-card card-border specific-recipe" id="specific-recipe-section" aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+      <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title" >
+        <header class="modal__header mega-card-header">
+          <section class="mega-card-title">
+            <h2 class="title" id="modal-1-title">
               Modal Title
             </h2>
-            <button aria-label="Close modal" data-micromodal-close></button>
-          </header>
-    
-          <div class="modal__content" id="modal-1-content">
-            Modal Content
-          </div>
+          </section>
+          <button aria-label="Close modal" data-micromodal-close class="close-icon">❌</button>
+          <span class="save-recipe-icon favorite-button" data-id="">❤️</span>
+          
+        </header>
+        
+        <section class="modal__content mega-body" id="modal-1-content">
+          <img class="specific-recipe-image" src="https://static01.nyt.com/images/2022/06/12/dining/12Korokke/merlin_208197630_39a1b4ee-998e-4706-9f2f-8d5696f5e6ac-mobileMasterAt3x.jpg" />
+          <section class="recipe-cost">
+            <h3>Total Cost</h3>
+            <div>
+              <h5></h5>
+            </div>
+            <button class="cook-button" type="button">Cook Recipe!</button>
+          </section>
+          <section class="ingredients">
+            <h3>Ingredients Needed</h3>
+            <ol></ol>
+          </section>
+          <section class="instructions">
+            <h3>Instructions</h3>
+            <ol></ol>
+          </section>
+        </section>
+            <!-- <section
+              id="specific-recipe-section"
+              class="mega-card card-border specific-recipe"
+            >
+              <header class="mega-card-header">
+                <span class="close-icon">❌</span>
+                <span class="save-recipe-icon favorite-button" data-id=""
+                  >❤️</span
+                >
+              </header>
+              <section class="mega-card-title">
+                <h2 class="title"></h2>
+              </section>
+          
+              <section class="mega-body">
+                <img
+                  class="specific-recipe-image"
+                  src="https://static01.nyt.com/images/2022/06/12/dining/12Korokke/merlin_208197630_39a1b4ee-998e-4706-9f2f-8d5696f5e6ac-mobileMasterAt3x.jpg"
+                />
+                <section class="recipe-cost">
+                  <h3>Total Cost</h3>
+                  <div>
+                    <h5></h5>
+                  </div>
+                  <button class="cook-button" type="button">Cook Recipe!</button>
+                </section>
+          
+                <section class="ingredients">
+                  <h3>Ingredients Needed</h3>
+                  <ol></ol>
+                </section>
+                <section class="instructions">
+                  <h3>Instructions</h3>
+                  <ol></ol>
+                </section>
+              </section> -->
+            <!-- Modal Content -->
     
         </div>
       </div>
