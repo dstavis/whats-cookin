@@ -8,6 +8,36 @@ class User {
     this.filteredResults = [];
   }
 
+  findIngredientByID(ingredientID){
+    return this.pantry.find( (ingredient) => ingredient.id === ingredientID)
+  }
+
+  changeUserStock(ingredientID, originalAmount, newAmount) {
+    let ingredient = this.findIngredientByID(ingredientID)
+    this.updateStockInPantry(ingredient, newAmount - originalAmount)
+  }
+
+  updateStockInPantry(ingredient, change) {
+    let postData = {
+      "userID": this.id,
+      "ingredientID": ingredient.id,
+      "ingredientModification": change
+    }
+    fetch('http://localhost:3001/api/v1/users', {
+      method: "POST",
+      // headers: {
+      //   'Content-Type': 'application/json'
+      // },
+      body: JSON.stringify(postData)
+    })
+    .then((response) => response.json())
+    .then( (data) => {
+      // {message: '"User # <userID> has 7 units of item # <ingredientID>"' }
+      console.log(data)
+    })
+    .catch( (error) => { console.error("Error: ", error) } )
+  }
+
   addRecipeToCook(recipe) {
     if (!this.recipesToCook.includes(recipe)) {
       this.recipesToCook.push(recipe);
