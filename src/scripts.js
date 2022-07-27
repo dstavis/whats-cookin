@@ -1,4 +1,5 @@
 import "./styles.css";
+import MicroModal from "micromodal";
 import { ingredients, recipe, users } from "./apiCalls";
 import RecipeRepository from "./classes/RecipeRepository";
 import User from "./classes/User";
@@ -35,7 +36,7 @@ searchButton.addEventListener("click", executeSearch);
 myRecipesButton.addEventListener("click", displayUserRecipes);
 closeIcon.addEventListener("click", closeSpecificRecipe);
 saveIcon.addEventListener("click", specificRecipeClicked);
-resultCardsContainer.addEventListener("click", specificRecipeClicked);
+// resultCardsContainer.addEventListener("click", specificRecipeClicked);
 
 function loadData() {
   Promise.all([users, recipe, ingredients]).then((data) => {
@@ -46,6 +47,7 @@ function loadData() {
     recipeRepo = new RecipeRepository();
     recipeRepo.importRecipesFromFile(recipeData, ingredientsData);
     displayAllRecipesView();
+    MicroModal.init()
   });
 }
 
