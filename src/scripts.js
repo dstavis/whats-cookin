@@ -44,7 +44,7 @@ datalistButton.addEventListener("click", updatePantryFromDatalist);
 window.addEventListener("load", loadData);
 toggleSeachOption.addEventListener("click", showKeywords);
 keywordList.addEventListener("click", keywordClicked);
-// homeButton.addEventListener("click", displayAllRecipesView);
+homeButton.addEventListener("click", displayAllRecipesView);
 searchButton.addEventListener("click", executeSearch);
 myPantryButton.addEventListener("click", showPantry);
 cookButton.addEventListener("click", cookRecipe);
@@ -197,9 +197,9 @@ function specificRecipeClicked(event) {
 
 function displaySpecificRecipe(recipe) {
   updateSpecificRecipeCard(recipe);
-  MicroModal.show("specific-recipe-section")
-  // show(specificRecipeSection);
-  // show(modalCurtain);
+  // MicroModal.show("specific-recipe-section")
+  show(specificRecipeSection);
+  show(modalCurtain);
 }
 
 function updateSpecificRecipeCard(recipe) {
