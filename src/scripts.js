@@ -15,6 +15,7 @@ const resultCardsContainer = document.querySelector(".results-grid-container");
 const specificRecipeSection = document.getElementById(
   "specific-recipe-section"
 );
+const ingredientsListUl = document.querySelector(".ingredients ul");
 const modalCurtain = document.querySelector(".grey-out-bg");
 const greeting = document.querySelector(".greeting");
 const header = document.querySelector(".results-header");
@@ -23,20 +24,84 @@ const toggleSeachOption = document.querySelector(".toggle-search-option");
 const searchButton = document.querySelector(".submit-search");
 const myRecipesButton = document.querySelector(".my-recipes-button");
 const homeButton = document.querySelector(".home-button");
+const myPantryButton = document.querySelector(".my-pantry");
 const keywordList = document.getElementById("keyword-list");
 const keywordSection = document.querySelector(".keyword-section");
 const closeIcon = document.querySelector(".close-icon");
 const saveIcon = document.querySelector(".save-recipe-icon");
+const defaultSearch = document.querySelector(".default-search");
+const pantrySearch = document.querySelector(".pantry-ingredient-datalist");
+const ingredientList = document.querySelector("#ingredient-list");
+const pantryItemTemplate = document.querySelector(".pantry-item-card-template");
+const pantry = document.querySelector(".pantry");
+const datalistString = document.querySelector(".input-value");
+const datalistQty = document.querySelector(".choose-ingredient-amount");
+const datalistButton = document.querySelector(".add-ingredient-quantity");
+const cookButton = document.querySelector(".cook-button");
+const ingredientsNeeded = document.querySelector(".ingredients-needed");
 
+datalistButton.addEventListener("click", updatePantryFromDatalist);
 window.addEventListener("load", loadData);
 toggleSeachOption.addEventListener("click", showKeywords);
 keywordList.addEventListener("click", keywordClicked);
 // homeButton.addEventListener("click", displayAllRecipesView);
 searchButton.addEventListener("click", executeSearch);
+myPantryButton.addEventListener("click", showPantry);
+cookButton.addEventListener("click", cookRecipe);
 myRecipesButton.addEventListener("click", displayUserRecipes);
 closeIcon.addEventListener("click", closeSpecificRecipe);
 saveIcon.addEventListener("click", specificRecipeClicked);
 resultCardsContainer.addEventListener("click", specificRecipeClicked);
+
+function updatePantryFromDatalist() {
+  user.evaluatePantry(
+    datalistString.value,
+    parseInt(datalistQty.value),
+    recipeRepo
+  );
+  pantry.innerHTML = "";
+  user.removeFromPantryView();
+  makeIngredientCard();
+}
+
+function cookRecipe() {
+  let recipeToCook = recipeRepo.recipes.find((recipe) => {
+    return recipe.id === parseInt(saveIcon.dataset.id);
+  });
+  user.compareIngredientsNeeded(recipeToCook);
+  if (user.notMatchingIngredients.length >= 1) {
+    user.compareIngredientAmounts(recipeToCook);
+    displayMissingIngredients();
+    user.notMatchingIngredients = []
+  } else {
+    ingredientsNeeded.innerHTML = `You Made it!!!`;
+    user.cookRecipe(recipeToCook);
+  }
+}
+
+function displayMissingIngredients() {
+  ingredientsListUl.innerHTML = ``
+  ingredientsListUl.replaceChildren();
+  ingredientsNeeded.innerHTML = `Head to the pantry you still need:`;
+  user.notMatchingIngredients.forEach((ing) => {
+    let listItem = document.createElement("li");
+    listItem.innerHTML = `${ing.amount} ${capitalize(ing.name)}`;
+    ingredientsListUl.append(listItem);
+  });
+}
+
+
+
+function convertPantryItemNames() {
+  user.pantry.forEach((pantryItem) => {
+    ingredientsData.forEach((ingredient) => {
+      if (pantryItem.ingredient === ingredient.id) {
+        pantryItem.name = ingredient.name;
+      }
+    });
+  });
+  return user.pantry;
+}
 
 function loadData() {
   Promise.all([users, recipe, ingredients]).then((data) => {
@@ -46,6 +111,9 @@ function loadData() {
     user = new User(usersData[Math.floor(Math.random() * 41)]);
     recipeRepo = new RecipeRepository();
     recipeRepo.importRecipesFromFile(recipeData, ingredientsData);
+    convertPantryItemNames();
+    makeIngredientCard();
+    addPantrySearchItems();
     displayAllRecipesView();
     MicroModal.init()
   });
@@ -54,14 +122,19 @@ function loadData() {
 function listKeywords() {
   keywordList.replaceChildren();
   recipeRepo.allTags.forEach((tag) => {
-    let keyword = document.createElement("div");
+    let keyword = document.createElement("button");
     keyword.classList.add("keyword");
+    keyword.type = "button";
     keyword.innerText = tag;
     keywordList.appendChild(keyword);
   });
 }
 
 function displayAllRecipesView() {
+  hide(pantry);
+  hide(pantrySearch);
+  show(resultCardsContainer);
+  show(defaultSearch);
   recipeRepo.clearData();
   listKeywords();
   greeting.innerText = `Welcome, ${user.name}!`;
@@ -130,6 +203,7 @@ function displaySpecificRecipe(recipe) {
 }
 
 function updateSpecificRecipeCard(recipe) {
+  ingredientsNeeded.innerHTML = `Ingredients:`;
   specificRecipeSection.querySelector(".title").innerText = recipe.name;
   if (user.recipesToCook.includes(recipe)) {
     specificRecipeSection
@@ -147,13 +221,14 @@ function updateSpecificRecipeCard(recipe) {
 }
 
 function updateSpecificRecipeIngredients(recipe) {
-  let ingredientsList = specificRecipeSection.querySelector(".ingredients ol");
-  ingredientsList.replaceChildren();
-  let portionNames = recipe.getPortionNames();
-  portionNames.forEach((portionName) => {
+  ingredientsListUl.replaceChildren();
+  let portions = recipe.getPortionInfo();
+  portions.forEach((portion) => {
     let listItem = document.createElement("li");
-    listItem.innerText = capitalize(portionName);
-    ingredientsList.append(listItem);
+    listItem.innerHTML = `<strong> ${portion.amount} </strong> ${
+      portion.unit
+    } of ${capitalize(portion.name)}`;
+    ingredientsListUl.append(listItem);
   });
 }
 
@@ -180,6 +255,35 @@ function makeRecipeCard(recipe) {
   newCard.querySelector(".recipe-image").src = recipe.imageURL;
   show(newCard);
   return newCard;
+}
+
+function makeIngredientCard() {
+  let alphabetizedPantry = alphabetize(user.pantry);
+  alphabetizedPantry.forEach((item) => {
+    let newItemCard = pantryItemTemplate.cloneNode(true);
+    newItemCard.querySelector(".pantry-item-name").innerText = item.name;
+    newItemCard.querySelector(".pantry-quantity").innerText = item.amount;
+    pantry.appendChild(newItemCard);
+    show(newItemCard);
+  });
+}
+
+function addPantrySearchItems() {
+  let alphabetizedIngredients = alphabetize(ingredientsData);
+  alphabetizedIngredients.forEach((ingredient) => {
+    let ingredientOption = document.createElement("option");
+    ingredientOption.value = ingredient.name;
+    ingredientOption.id = ingredient.id;
+
+    ingredientList.appendChild(ingredientOption);
+  });
+}
+
+function showPantry() {
+  hide(resultCardsContainer);
+  hide(defaultSearch);
+  show(pantry);
+  show(pantrySearch);
 }
 
 function addRecipeCardToResultsContainer(recipeCard) {
@@ -213,6 +317,10 @@ function executeSearch() {
 }
 
 function displayUserRecipes() {
+  hide(pantry);
+  hide(pantrySearch);
+  show(defaultSearch);
+  show(resultCardsContainer);
   greeting.innerText = ``;
   if (user.recipesToCook.length >= 1) {
     header.innerText = `${user.name}'s recipes!`;
@@ -225,6 +333,19 @@ function displayUserRecipes() {
     header.innerText = `There are no recipes saved.`;
     resultCardsContainer.replaceChildren();
   }
+}
+
+function alphabetize(data) {
+  let alphabetizedData = data.sort((a, b) => {
+    if (a.name.toLowerCase() < b.name.toLowerCase()) {
+      return -1;
+    } else if (a.name.toLowerCase() > b.name.toLowerCase()) {
+      return 1;
+    } else {
+      return 0;
+    }
+  });
+  return alphabetizedData;
 }
 
 function removeUserRecipe(recipe) {
