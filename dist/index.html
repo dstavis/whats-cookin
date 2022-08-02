@@ -7,16 +7,17 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Barlow:wght@100&family=Raleway:wght@100&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fascinate+Inline&family=Righteous&display=swap"
       rel="stylesheet"
     />
     <meta name="description" content="A cooking website" />
   </head>
+
   <body>
     <nav class="nav">
       <button type="button" class="home-button">Home</button>
       <button type="button" class="my-recipes-button">My Recipes</button>
-      <button type="button">Pantry</button>
+      <button type="button" class="my-pantry">Pantry</button>
     </nav>
     <main>
       <section class="body-container">
@@ -24,32 +25,62 @@
           <h2></h2>
         </section>
         <section class="search-section">
-          <div class="search-bar-container">
-            <input
-              class="search-bar"
-              type="search"
-              placeholder="Search by Title or Ingredients"
-            />
-          </div>
-          <button class="submit-search" type="button">Submit Search</button>
-          <button type="button" class="toggle-search-option">
-            search by keyword
-          </button>
-          <section class="keyword-section hidden">
-            <div id="keyword-list"></div>
+          <section class="default-search">
+            <div class="search-bar-container">
+              <input
+                class="search-bar"
+                type="search"
+                placeholder="Search by Title or Ingredients"
+              />
+            </div>
+            <button type="button" class="search-option">
+              Click to search by keyword
+            </button>
+            <button class="submit-search" type="button">Submit Search</button>
+            <button type="button" class="keyword-option hidden">
+              Click to search by Titles or Ingredients
+            </button>
+            <section class="keyword-section hidden">
+              <div id="keyword-list"></div>
+            </section>
+          </section>
+          <section class="pantry-ingredient-datalist hidden">
+            <section class="ingredient-datalist-box update-pantry">
+              <label>Find Ingredients:</label>
+              <input
+                class="input-value"
+                list="ingredient-list"
+                id=""
+                placeholder="Search here..."
+              />
+              <datalist id="ingredient-list" list="ingredients">
+                <option value=""></option>
+              </datalist>
+            </section>
+            <section class="update-pantry">
+              <input
+                class="choose-ingredient-amount"
+                type="number"
+                placeholder="0"
+              />
+            </section>
+            <section class="update-user-pantry-button update-pantry">
+              <button class="add-ingredient-quantity" type="button">
+                Submit
+              </button>
+            </section>
           </section>
         </section>
-
+        <section class="results-header">
+          <h1 class="header">All Recipes</h1>
+        </section>
         <section class="sides-container">
           <section class="left-side"></section>
-
           <section class="results center">
-            <h1 class="results-header">All Recipes</h1>
             <section class="results-grid-container"></section>
+            <section class="pantry hidden"></section>
           </section>
-
           <section class="right-side"></section>
-
           <section
             id="specific-recipe-section"
             class="mega-card card-border specific-recipe hidden"
@@ -63,7 +94,6 @@
             <section class="mega-card-title">
               <h2 class="title"></h2>
             </section>
-
             <section class="mega-body">
               <img
                 class="specific-recipe-image"
@@ -77,13 +107,12 @@
                 </div>
                 <button class="cook-button" type="button">Cook Recipe!</button>
               </section>
-
               <section class="ingredients">
-                <h3>Ingredients Needed</h3>
-                <ol></ol>
+                <h2 class="ingredients-needed">Ingredients Needed</h2>
+                <ul></ul>
               </section>
               <section class="instructions">
-                <h3>Instructions</h3>
+                <h2><u>Instructions</u></h2>
                 <ol></ol>
               </section>
             </section>
@@ -102,8 +131,15 @@
     <img class="recipe-image" src="" alt="food image" />
     <section tabindex="0">
       <p tabindex="0" class="recipe-name"></p>
+    </section>
+    <section class="favorite-container">
       <button class="favorite-button">❤️</button>
     </section>
   </article>
+  <section class="pantry-item-card-template hidden">
+    <section class="pantry-item-name size">Ingredient</section>
+    <section class="pantry-quantity size"></section>
+    <section class="pantry-unit-type size">Unit(s)</section>
+  </section>
   <script src="bundle.js"></script>
 </html>

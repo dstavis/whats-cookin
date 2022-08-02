@@ -11,9 +11,13 @@ class Recipe {
     return Math.floor(Math.random() * 1000);
   }
 
-  getPortionNames() {
+  getPortionInfo() {
     return this.portions.map((portion) => {
-      return portion.name;
+      return {
+        name: portion.name, 
+        amount: portion.amount,
+        unit: portion.unit
+      }
     });
   }
 
@@ -21,7 +25,7 @@ class Recipe {
     const ingredientsCost = this.portions.map((portion) => {
       return (portion.amount * portion.cost).toFixed(2) / 100;
     });
-    return ingredientsCost
+    return ingredientsCost;
   }
 
   getInstructions() {
