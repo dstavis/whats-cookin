@@ -5,12 +5,12 @@ The objective of this project is to create a recipe tracking / meal planning app
 
 
 ## Set Up
-1. Fork [this](https://github.com/dstavis/whats-cookin) repository and [this](https://github.com/turingschool-examples/whats-cookin-api)
+1. Fork [this](https://github.com/dstavis/whats-cookin) repository and [this](https://github.com/turingschool-examples/whats-cookin-api) repository
 2. Clone both of the repositories to your local machine
 3. `cd` into the repository
 5.  Once in the repository, run `npm install`
 6.  After installation, run `npm start`
-7. Repeat steps 5 & 6 for the other repository
+7. Repeat steps 3 - 6 for the other repository
 8.  A live server should now be available at `http://localhost:8080/`, paste this address into your browser
 
 (If you see the error message prompting you to run "npm audit fix --force" do NOT run this.)
