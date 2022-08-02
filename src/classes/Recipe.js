@@ -1,16 +1,15 @@
 class Recipe {
   constructor(recipeDetails = {}) {
-    this.id = recipeDetails.id || this.generateRandomId();
+    this.id = recipeDetails.id
     this.name = recipeDetails.name;
     this.imageURL = recipeDetails.imageURL;
     this.portions = recipeDetails.portions || [];
     this.instructions = recipeDetails.instructions || [];
     this.tags = recipeDetails.tags || [];
   }
-  generateRandomId() {
-    return Math.floor(Math.random() * 1000);
-  }
+ 
 
+  
   getPortionInfo() {
     return this.portions.map((portion) => {
       return {

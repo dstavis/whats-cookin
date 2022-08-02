@@ -119,12 +119,6 @@ describe("Recipe", () => {
     expect(recipe2.id).to.equal(2);
   });
 
-  it("the constructor should generate a random number by default", () => {
-    expect(recipe1.id).to.equal(1);
-    expect(recipeUndefined.id).to.be.a("number");
-    expect(recipeUndefined.generateRandomId()).to.be.a("number");
-  });
-
   it("the constructor should contain a recipe name", () => {
     expect(recipe1.name).to.equal("Chocolate Chip Cookie");
     expect(recipe2.name).to.equal("Ham Sandwich");
